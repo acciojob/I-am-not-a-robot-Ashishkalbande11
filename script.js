@@ -1,13 +1,12 @@
-//your code her
-
-//your code here
 document.addEventListener('DOMContentLoaded', () => {
-    const main = document.querySelector('main');
+    const main = document.querySelector('#main');
     const h = document.createElement('h3');
     const para = document.createElement('p');
     const resetButton = document.createElement('button');
     const verifyButton = document.createElement('button');
-  
+    const imageContainer = document.createElement('div');
+    
+    imageContainer.className = 'flex';
     let selectedImages = [];
     let images = [];
     let duplicateIndex = Math.floor(Math.random() * 5); // Randomly select an index for the duplicate
@@ -36,13 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
       images = ['img1', 'img2', 'img3', 'img4', 'img5'];
       const duplicateImage = images[duplicateIndex];
       const shuffledImages = [...images, duplicateImage].sort(() => Math.random() - 0.5);
+      
       shuffledImages.forEach((imgClass, index) => {
         const img = document.createElement('img');
         img.className = imgClass;
         img.dataset.index = index;
         img.addEventListener('click', handleImageClick);
-        main.appendChild(img);
+        imageContainer.appendChild(img);
       });
+      
+      main.appendChild(imageContainer);
     }
   
     // Function to handle image click
@@ -65,8 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
       selectedImages.forEach(img => img.classList.remove('selected'));
       selectedImages = [];
       verifyButton.style.display = 'none';
+      resetButton.style.display = 'none';
       h.textContent = 'Please click on the identical tiles to verify that you are not a robot.';
-      para.remove();
+      if (para) para.remove();
     }
   
     // Function to verify the selected images
@@ -84,5 +87,4 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Initialize the images
     generateImages();
-  });
-  
+});
